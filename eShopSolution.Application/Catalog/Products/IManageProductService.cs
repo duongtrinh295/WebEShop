@@ -1,7 +1,6 @@
 ﻿using eShopSolution.Application.Catalog.Products.Dtos;
 using eShopSolution.Application.Catalog.Products.Dtos.Manage;
 using eShopSolution.Application.Dtos;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace eShopSolution.Application.Catalog.Products
@@ -20,8 +19,6 @@ namespace eShopSolution.Application.Catalog.Products
         Task<bool> UpdateStock(int productId, int addedQuantity);
 
         Task AddViewcount(int productId);
-
-        Task<List<ProductViewModel>> GetAll();
 
         Task<PagedResult<ProductViewModel>> GetAllPaging(GetProductPadingRequest request);
 
