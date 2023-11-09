@@ -1,6 +1,4 @@
-﻿using eShopSolution.Application.Catalog.Products.Dtos;
-using eShopSolution.Application.Catalog.Products.Dtos.Public;
-using eShopSolution.Application.Dtos;
+﻿
 using eShopSolution.Data.EF;
 using System;
 using System.Collections.Generic;
@@ -8,6 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using eShopSolution.ViewModels.Catalog.Products;
+using eShopSolution.ViewModels.Common;
+using eShopSolution.ViewModels.Catalog.Products.Public;
 
 namespace eShopSolution.Application.Catalog.Products
 {
@@ -30,12 +31,12 @@ namespace eShopSolution.Application.Catalog.Products
 						select new { p, pt, pic };
 
 			// filter
-
+			// sửa lại ròi
 			if (request.CategoryId.HasValue && request.CategoryId.Value > 0)
 				query = query.Where(p => p.pic.CategoryId == request.CategoryId);
 
-			// pading
-			int totalRow = await query.CountAsync();
+            // pading
+            int totalRow = await query.CountAsync();
 
 			var data = await query.Skip((request.PageIndex - 1) * request.PageSize)
 				.Take(request.PageSize)
