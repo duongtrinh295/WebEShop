@@ -5,11 +5,8 @@ using eShopSolution.Data.Entites;
 using eShopSolution.Utilities.Exceptions;
 using eShopSolution.ViewModels.Catalog;
 using eShopSolution.ViewModels.Catalog.Products;
-using eShopSolution.ViewModels.Catalog.Products.Manage;
 using eShopSolution.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Server.IISIntegration;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -43,7 +40,7 @@ namespace eShopSolution.Application.Catalog.Products
 			await _context.SaveChangesAsync();
 		}
 
-		public async Task<int> Create(ProductCreateRequest request)
+		public async Task<int> Create(ViewModels.Catalog.Products.ProductCreateRequest request)
 		{
 			var product = new Product()
 			{
@@ -88,7 +85,7 @@ namespace eShopSolution.Application.Catalog.Products
 
 		}
 
-		public async Task<int> Delete(int productId)
+        public async Task<int> Delete(int productId)
 		{
 			var product = await _context.Products.FindAsync(productId);
 
@@ -110,7 +107,7 @@ namespace eShopSolution.Application.Catalog.Products
 
 	
 
-		public async Task<PagedResult<ProductViewModel>> GetAllPaging(GetProductPadingRequest request)
+		public async Task<PagedResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request)
 		{
 			// select join
 			var query = from p in _context.Products
@@ -123,7 +120,7 @@ namespace eShopSolution.Application.Catalog.Products
 			if (!string.IsNullOrEmpty(request.keyword))
 				query = query.Where(x => x.pt.Name.Contains(request.keyword));
 
-			if (request.CategoryId.Count >0)
+            if (request.CategoryId.Count > 0)
 				query = query.Where(p => request.CategoryId.Contains(p.pic.CategoryId));
 
 			// pading
@@ -197,6 +194,7 @@ namespace eShopSolution.Application.Catalog.Products
             return await _context.SaveChangesAsync();
 		}
 
+
         public Task<int> UpdateImage(int imageId, string caption, bool isDefault)
         {
             throw new NotImplementedException();
@@ -219,6 +217,12 @@ namespace eShopSolution.Application.Catalog.Products
 			product.Stock += addedQuantity;
 			return await _context.SaveChangesAsync() > 0;
 		}
+
+
+        Task<List<ProductImageViewModel>> IManageProductService.GetListImage(int productId)
+        {
+            throw new NotImplementedException();
+        }
 
         private async Task<string> SaveFile(IFormFile file)
         {
