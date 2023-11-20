@@ -38,7 +38,18 @@ namespace eShopSolution.Data.EF
 
             modelBuilder.ApplyConfiguration(new AppUserConfiguration());
             modelBuilder.ApplyConfiguration(new AppRoleConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductImageConfiguration());
 
+            // sửa lại chatgpt
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Cart>().Property(c => c.Price).HasColumnType("decimal(18, 2)");
+            modelBuilder.Entity<OrderDetail>().Property(od => od.Price).HasColumnType("decimal(18, 2)");
+            modelBuilder.Entity<Product>().Property(p => p.OriginalPrice).HasColumnType("decimal(18, 2)");
+            modelBuilder.Entity<Product>().Property(p => p.Price).HasColumnType("decimal(18, 2)");
+            modelBuilder.Entity<Promotion>().Property(pr => pr.DiscountAmount).HasColumnType("decimal(18, 2)");
+            modelBuilder.Entity<Transaction>().Property(t => t.Amount).HasColumnType("decimal(18, 2)");
+            modelBuilder.Entity<Transaction>().Property(t => t.Fee).HasColumnType("decimal(18, 2)");
 
             modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("AppUserClaims");
             modelBuilder.Entity<IdentityUserRole<Guid>>().ToTable("AppUserRoles").HasKey(x => new { x.UserId, x.RoleId });
@@ -74,6 +85,7 @@ namespace eShopSolution.Data.EF
 
 
         public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
     }
 }
 
