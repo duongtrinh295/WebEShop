@@ -19,11 +19,11 @@ namespace eShopSolution.BackendAPI.Controllers
             _manageProductService = manageProductService;
         }
         //http://localhost:port/product
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        [HttpGet("{languageId}")]
+        public async Task<IActionResult> Get(string languageId)
         {
-            var product = await _publicProductService.GetAll();
-            return Ok(product);
+            var products = await _publicProductService.GetAll(languageId);
+            return Ok(products);
         }
 
         //http://localhost:port/product/public-paging
@@ -54,6 +54,36 @@ namespace eShopSolution.BackendAPI.Controllers
             var product = await _manageProductService.GetById(productId, request.LanguageId);
 
             return CreatedAtAction(nameof(GetById), new { id = productId }, product);
+        }
+
+
+
+        [HttpPut]
+        public async Task<IActionResult> Update([FromForm] ProductUpdateRequest request)
+        {
+            var affectedResult = await _manageProductService.Update(request);
+            if (affectedResult == 0)
+                return BadRequest();
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var affectedResult = await _manageProductService.Delete(id);
+            if (affectedResult == 0)
+                return BadRequest();
+            return Ok();
+        }
+
+        [HttpPut("price/{id}/{newPrice}")]
+        public async Task<IActionResult> UpdatePrice(int id, decimal newPrice)
+        {
+            var isSuccessful = await _manageProductService.UpdatePrice(id, newPrice);
+            if (isSuccessful)
+                return Ok();
+
+            return BadRequest();
         }
 
     }
