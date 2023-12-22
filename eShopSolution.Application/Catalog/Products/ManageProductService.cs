@@ -46,7 +46,8 @@ namespace eShopSolution.Application.Catalog.Products
 			}
 
 			_context.ProductImages.Add(productImage);
-			return await _context.SaveChangesAsync();
+			await _context.SaveChangesAsync();
+            return productImage.Id;
         }
         public async Task<List<ProductImageViewModel>> GetListImages(int productId)
         {
@@ -64,7 +65,7 @@ namespace eShopSolution.Application.Catalog.Products
 				}).ToListAsync();
         }
 
-        public async Task<int> RemoveImage(int imageId, int productId)
+        public async Task<int> RemoveImage(int imageId)
         {
 			var productImage = await _context.ProductImages.FindAsync(imageId);
             if (productImage == null)
@@ -73,7 +74,28 @@ namespace eShopSolution.Application.Catalog.Products
 			return await _context.SaveChangesAsync();
         }
 
-        public async Task<int> UpdateImage(int imageId, int productId, ProductImageUpdateRequest request)
+        public async Task<ProductImageViewModel> GetImageById(int imageId)
+        {
+			var image = await _context.ProductImages.FindAsync();
+            if (image == null)
+                throw new EShopException($"Cannot find an image with id{imageId}");
+
+
+            var viewModel = new ProductImageViewModel()
+                {
+                    Caption = image.Caption,
+                    DateCreated = image.DateCreated,
+                    FileSize = image.FileSize,
+                    Id = image.Id,
+                    ImagePath = image.ImagePath,
+                    IsDefault = image.IsDefault,
+                    ProductId = image.ProductId,
+                    SortOder = image.SortOder
+                };
+			return viewModel;
+        }
+
+        public async Task<int> UpdateImage(int imageId, ProductImageUpdateRequest request)
         {
 			var productImage = await _context.ProductImages.FindAsync(imageId);
 			if (productImage == null)
@@ -290,5 +312,6 @@ namespace eShopSolution.Application.Catalog.Products
             await _storageService.SaveFileAsync(file.OpenReadStream(), fileName);
             return fileName;
         }
+
     }
 }
