@@ -1,10 +1,16 @@
-﻿using eShopSolution.ViewModels.System.Users;
+﻿using eShopSolution.AdminApp.Services;
+using eShopSolution.ViewModels.System.Users;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eShopSolution.AdminApp.Controllers
 {
     public class UserController : Controller
     {
+        private readonly IUserApiClient _userApiClient;
+        public UserController(IUserApiClient userApiClient) 
+        {
+            _userApiClient = userApiClient;
+        }
         public IActionResult Index()
         {
             return View();
@@ -15,11 +21,13 @@ namespace eShopSolution.AdminApp.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Login(LoginRequest request)
+        public async Task<IActionResult> Login(LoginRequest request)
         {
             if(!ModelState.IsValid)
                 return View(ModelState);
-            return View();
+
+            var token = await _userApiClient.Authenticate(request);
+            return View(token);
         } 
     }
 }

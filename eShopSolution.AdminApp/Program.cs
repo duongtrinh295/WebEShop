@@ -1,3 +1,4 @@
+using eShopSolution.AdminApp.Services;
 using eShopSolution.ViewModels.System.Users;
 using FluentValidation.AspNetCore;
 
@@ -7,13 +8,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews()
          .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
 
+//Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation
+//var mvcBuilder = builder.Services.AddRazorPages();
 
-var mvcBuilder = builder.Services.AddRazorPages();
+//if (builder.Environment.IsDevelopment())
+//{
+//    mvcBuilder.AddRazorRuntimeCompilation();
+//}
+builder.Services.AddHttpClient();
 
-if (builder.Environment.IsDevelopment())
-{
-    mvcBuilder.AddRazorRuntimeCompilation();
-}
+builder.Services.AddTransient<IUserApiClient, UserApiClient>();
 
 var app = builder.Build();
 
