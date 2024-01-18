@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace eShopSolution.AdminApp.Controllers
 {
-    [Authorize]
+    [Authorize] 
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -17,6 +17,7 @@ namespace eShopSolution.AdminApp.Controllers
 
         public IActionResult Index()
         {
+            var user = User.Identity.Name;
             return View();
         }
 
