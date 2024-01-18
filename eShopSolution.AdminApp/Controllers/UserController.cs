@@ -57,6 +57,7 @@ namespace eShopSolution.AdminApp.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
             return RedirectToAction("Login","User");
         }
         private ClaimsPrincipal validateToken(string jwtToken) 
