@@ -1,4 +1,5 @@
 ﻿using eShopSolution.Application.System.Users;
+using eShopSolution.ViewModels.Catalog.ProductImages;
 using eShopSolution.ViewModels.System.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -29,7 +30,7 @@ namespace eShopSolution.BackendAPI.Controllers
             return Ok(resultToken);
         }
 
-        [HttpPost("regiter")]
+        [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Regiter([FromBody] RegisterRequest request)
         {
@@ -41,5 +42,15 @@ namespace eShopSolution.BackendAPI.Controllers
                 return BadRequest("Regiter is unsuccessful.");
             return Ok(resutl);
         }
+
+
+        //http://localhost/api/users/paging?pageIndex=1&pageSize=10&keyword=
+        [HttpGet("paging")]
+        public async Task<IActionResult> GeAlltPaging([FromQuery]GetUserPagingRequest request)
+        {
+            var users = await _userService.GetUsersPaging(request);
+            return Ok(users);
+        }
+
     }
 }
