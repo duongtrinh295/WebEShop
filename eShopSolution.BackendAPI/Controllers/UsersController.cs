@@ -9,6 +9,7 @@ namespace eShopSolution.BackendAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly  IUserService _userService;
@@ -46,7 +47,7 @@ namespace eShopSolution.BackendAPI.Controllers
 
         //http://localhost/api/users/paging?pageIndex=1&pageSize=10&keyword=
         [HttpGet("paging")]
-        public async Task<IActionResult> GeAlltPaging([FromQuery]GetUserPagingRequest request)
+        public async Task<IActionResult> GeAllPaging([FromQuery]GetUserPagingRequest request)
         {
             var users = await _userService.GetUsersPaging(request);
             return Ok(users);
