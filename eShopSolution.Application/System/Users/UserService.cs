@@ -71,7 +71,7 @@ namespace eShopSolution.Application.System.Users
                  || x.PhoneNumber.Contains(request.Keyword));
             }
 
-            //3paging
+            //3. Paging
             int totalRow = await query.CountAsync();
 
             var data = await query.Skip((request.PageIndex - 1) * request.PageSize)
@@ -90,8 +90,6 @@ namespace eShopSolution.Application.System.Users
             var pagedResult = new PagedResult<UserVm>()
             {
                 TotalRecord = totalRow,
-                //PageIndex = request.PageIndex,
-                //PageSize = request.PageSize,
                 Items = data
             };
             return pagedResult;
