@@ -22,6 +22,9 @@ builder.Services.AddSession(options =>
     options.IdleTimeout = TimeSpan.FromMinutes(30);
 });
 
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+
 //Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation
 //var mvcBuilder = builder.Services.AddRazorPages();
 
