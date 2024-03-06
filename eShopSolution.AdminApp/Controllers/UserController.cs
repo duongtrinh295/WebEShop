@@ -58,67 +58,45 @@ namespace eShopSolution.AdminApp.Controllers
             return View(request);
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> Edit(Guid id)
-        //{
-        //    var result = await _userApiClient.GetById(id);
-        //    if (result.IsSuccessed)
-        //    {
-        //        var user = result.ResultObj;
-        //        if (user != null)
-        //        {
-        //            var updateRequest = new UserUpdateRequest()
-        //            {
-        //                Dob = user.Dob,
-        //                Email = user.Email,
-        //                FirstName = user.FirstName,
-        //                LastName = user.LastName,
-        //                PhoneNumber = user.PhoneNumber,
-        //                Id = id
-        //            };
-        //            return View(updateRequest);
-        //        }
-        //    }
-        //    return RedirectToAction("Error", "Home");
-        //}
-
-        //[HttpPost]
-        //public async Task<IActionResult> Edit(UserUpdateRequest request)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return View();
-
-        //    var result = await _userApiClient.UpdateUser(request.Id, request);
-        //    if (result.IsSuccessed)
-        //        return RedirectToAction("Index");
-
-        //    ModelState.AddModelError("", result.Message ?? "");
-        //    return View(request);
-
-        //}
-
         [HttpGet]
-        public async Task<IActionResult> Update(Guid id)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            var user = await _userApiClient.GetById(id);
-            return View(user);
+            var result = await _userApiClient.GetById(id);
+            if (result.IsSuccessed)
+            {
+                var user = result.ResultObj;
+                if (user != null)
+                {
+                    var updateRequest = new UserUpdateRequest()
+                    {
+                        Dob = user.Dob,
+                        Email = user.Email,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        PhoneNumber = user.PhoneNumber,
+                        Id = id
+                    };
+                    return View(updateRequest);
+                }
+            }
+            return RedirectToAction("Error", "Home");
         }
+
         [HttpPost]
-        public async Task<IActionResult> Update(RegisterRequest request)
+        public async Task<IActionResult> Edit(UserUpdateRequest request)
         {
             if (!ModelState.IsValid)
                 return View();
 
-            var result = await _userApiClient.RegisterUser(request);
-
+            var result = await _userApiClient.UpdateUser(request.Id, request);
             if (result.IsSuccessed)
                 return RedirectToAction("Index");
 
-            if (result.Message != null)
-                ModelState.AddModelError("", result.Message);
-
+            ModelState.AddModelError("", result.Message ?? "");
             return View(request);
+
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Logout()

@@ -44,7 +44,7 @@ namespace eShopSolution.BackendAPI.Controllers
             if (!resutl.IsSuccessed)
                 return BadRequest(resutl);
            
-            return Ok();
+            return Ok(resutl);
         }
 
         //PUT: http://localhost/api/users/id
