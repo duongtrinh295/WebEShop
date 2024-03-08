@@ -104,7 +104,31 @@ namespace eShopSolution.AdminApp.Controllers
 
         }
 
+        [HttpGet]
+        public ActionResult Delete(Guid id) 
+        {
+            return View( new UserDeleteRequest()
+            {
+                Id = id
+            });
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> Delete(UserDeleteRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            var result = await _userApiClient.Delete(request.Id);
+
+            if (result.IsSuccessed)
+                return RedirectToAction("Index");
+            
+            ModelState.AddModelError("", result.Message);
+
+            return View(request);
+        }
+      
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
