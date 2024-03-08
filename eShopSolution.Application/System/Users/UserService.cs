@@ -33,13 +33,14 @@ namespace eShopSolution.Application.System.Users
         {
             var user = await _userManager.FindByNameAsync(request.UserName);
 
-            if (user == null) 
-                return null;
+            if (user == null)
+                return new ApiErrorResult<string>("Tài khoản không tồn tại");
 
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
-            if (!result.Succeeded)
-                return null;
 
+            if (!result.Succeeded)
+                return new ApiErrorResult<string>("Tài khoản hoặc mật khẩu không đúng");
+            
             var roles = await _userManager.GetRolesAsync(user);
             var claims = new[]
             {
