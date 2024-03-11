@@ -57,10 +57,10 @@ namespace eShopSolution.AdminApp.Controllers
 
             var result = await _userApiClient.RegisterUser(request);
 
-            if (result.IsSuccessed)
-            {
-                TempData["result"] = "Thêm mới người dùng thành công";
-            }
+            //if (result.IsSuccessed)
+            //{
+            //    TempData["result"] = "Thêm mới người dùng thành công";
+            //}
            
             if (result.IsSuccessed)
                 return RedirectToAction("Index");
@@ -140,7 +140,7 @@ namespace eShopSolution.AdminApp.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.Session.Remove("Token");
-            return RedirectToAction("Login","User");
+            return RedirectToAction("Index", "Login");
         }
     }
 }
