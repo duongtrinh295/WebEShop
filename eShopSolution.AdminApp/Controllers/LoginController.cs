@@ -39,8 +39,13 @@ namespace eShopSolution.AdminApp.Controllers
 
             var result = await _userApiClient.Authenticate(request);
 
-            var userPrincipal = this.ValidateToken(result.ResultObj);
+            if (result.ResultObj == null)
+            {
+                ModelState.AddModelError("", result.Message ?? "");
+                return View();
+            }
 
+            var userPrincipal = this.ValidateToken(result.ResultObj);
             var authProperties = new AuthenticationProperties
             {
                 ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
