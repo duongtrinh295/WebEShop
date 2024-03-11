@@ -21,7 +21,7 @@ namespace eShopSolution.AdminApp.Controllers
             _userApiClient = userApiClient;
             _configuration = configuration;
         }
-        public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 1)
         {
 
             var request = new GetUserPagingRequest()
@@ -33,11 +33,6 @@ namespace eShopSolution.AdminApp.Controllers
             };
             var data = await _userApiClient.GetUsersPagings(request);
             ViewBag.Keyword = keyword;
-
-            if (TempData["result"] != null)            
-                ViewBag.SuccessMsg = TempData["result"];
-            
-
             return View(data.ResultObj);
         }
 
@@ -135,7 +130,7 @@ namespace eShopSolution.AdminApp.Controllers
             if (result.IsSuccessed)
                 return RedirectToAction("Index");
             
-            ModelState.AddModelError("", result.Message ?? "");
+            ModelState.AddModelError("", result.Message);
 
             return View(request);
         }
