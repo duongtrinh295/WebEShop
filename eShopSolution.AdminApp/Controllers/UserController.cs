@@ -33,6 +33,10 @@ namespace eShopSolution.AdminApp.Controllers
             };
             var data = await _userApiClient.GetUsersPagings(request);
             ViewBag.Keyword = keyword;
+            
+            if (TempData["result"] != null)
+                ViewBag.SuccessMsg = TempData["result"];
+
             return View(data.ResultObj);
         }
 
@@ -57,13 +61,11 @@ namespace eShopSolution.AdminApp.Controllers
 
             var result = await _userApiClient.RegisterUser(request);
 
-            //if (result.IsSuccessed)
-            //{
-            //    TempData["result"] = "Thêm mới người dùng thành công";
-            //}
-           
             if (result.IsSuccessed)
+            {
+                TempData["result"] = "Thêm mới người dùng thành công";
                 return RedirectToAction("Index");
+            }
 
             if (result.Message !=null)    
                 ModelState.AddModelError("", result.Message);
@@ -102,8 +104,12 @@ namespace eShopSolution.AdminApp.Controllers
                 return View();
 
             var result = await _userApiClient.UpdateUser(request.Id, request);
+
             if (result.IsSuccessed)
+            {
+                TempData["result"] = "Cập nhật người dùng thành công";
                 return RedirectToAction("Index");
+            }
 
             ModelState.AddModelError("", result.Message ?? "");
             return View(request);
@@ -128,8 +134,11 @@ namespace eShopSolution.AdminApp.Controllers
             var result = await _userApiClient.Delete(request.Id);
 
             if (result.IsSuccessed)
+            {
+                TempData["result"] = "Xóa người dùng thành công";
                 return RedirectToAction("Index");
-            
+            }
+
             ModelState.AddModelError("", result.Message ?? "");
 
             return View(request);
