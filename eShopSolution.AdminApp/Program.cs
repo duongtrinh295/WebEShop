@@ -24,6 +24,8 @@ builder.Services.AddSession(options =>
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+builder.Services.AddTransient<IUserApiClient, UserApiClient>();
+builder.Services.AddTransient<IRoleApiClient, RoleApiClient>();
 
 //Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation
 //var mvcBuilder = builder.Services.AddRazorPages();
