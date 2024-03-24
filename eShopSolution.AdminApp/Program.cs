@@ -27,6 +27,7 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddTransient<IUserApiClient, UserApiClient>();
 builder.Services.AddTransient<IRoleApiClient, RoleApiClient>();
 builder.Services.AddTransient<ILanguageApiClient, LanguageApiClient>();
+builder.Services.AddTransient<IProductApiClient, ProductApiClient>();
 
 //Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation
 //var mvcBuilder = builder.Services.AddRazorPages();
