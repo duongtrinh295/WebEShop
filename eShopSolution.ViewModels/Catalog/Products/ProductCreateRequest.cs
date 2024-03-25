@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel.DataAnnotations;
 
-namespace eShopSolution.ViewModels.Catalog.ProductImages
+namespace eShopSolution.ViewModels.Catalog.Products
 {
     public class ProductCreateRequest
     {
@@ -14,6 +12,7 @@ namespace eShopSolution.ViewModels.Catalog.ProductImages
 
         public int Stock { set; get; }
 
+        [Required(ErrorMessage = "Bạn phải nhập tên sản phẩm")]
         public string? Name { set; get; }
 
         public string? Description { set; get; }
