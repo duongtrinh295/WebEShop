@@ -1,8 +1,7 @@
 ﻿
-using eShopSolution.Application;
-using eShopSolution.Data.Entites;
-using eShopSolution.ViewModels.Catalog;
+
 using eShopSolution.ViewModels.Catalog.ProductImages;
+using eShopSolution.ViewModels.Catalog.Products;
 using eShopSolution.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
