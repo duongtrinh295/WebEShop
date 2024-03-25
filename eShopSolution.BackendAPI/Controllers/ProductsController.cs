@@ -17,13 +17,13 @@ namespace eShopSolution.BackendAPI.Controllers
         {
             _productService = productService;
         }
-        
+
 
         //http://localhost:port/product/?pageIndex=1&pagesize=1&categoryId=
-        [HttpGet("{languageId}")]
-        public async Task<IActionResult> GeAlltPaging(string languageId , [FromQuery] GetPublicProductPadingRequest request)
+        [HttpGet("paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] GetManageProductPagingRequest request)
         {
-            var products = await _productService.GetAllByCategoryId(languageId, request);
+            var products = await _productService.GetAllPaging(request);
             return Ok(products);
         }
 

@@ -9,8 +9,10 @@ namespace eShopSolution.ViewModels.Catalog.ProductImages
 {
     public class GetManageProductPagingRequest : PagingRequestBase
     {
-        public string? keyword { get; set; }
+        public string? Keyword { get; set; }
 
-        public List<int>? CategoryId { get; set; }
+        public List<int>? CategoryIds { get; set; }
+
+        public string? LanguageId { get; set; }
     }
 }
