@@ -31,6 +31,9 @@ namespace eShopSolution.Application.System.Users
         }
         public async Task<ApiResult<string>> Authencate(LoginRequest request)
         {
+            if(request.UserName == null || request.Password == null)
+                return new ApiErrorResult<string>("Vui lòng nhập thông tin tài khoản và mật khẩu");
+
             var user = await _userManager.FindByNameAsync(request.UserName);
 
             if (user == null)

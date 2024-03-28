@@ -1,4 +1,5 @@
-﻿using eShopSolution.Application.Catalog.Products;
+﻿using eShopSolution.Application.Catalog.Categories;
+using eShopSolution.Application.Catalog.Products;
 using eShopSolution.Application.Common;
 using eShopSolution.Application.System.Languages;
 using eShopSolution.Application.System.Roles;
@@ -36,6 +37,8 @@ builder.Services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<ILanguageService, LanguageService>();
 builder.Services.AddTransient<IRoleService, RoleService>();
+builder.Services.AddTransient<ICategoryService, CategoryService>();
+
 
 
 
